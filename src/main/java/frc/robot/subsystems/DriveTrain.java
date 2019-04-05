@@ -24,45 +24,41 @@ public class DriveTrain extends Subsystem {
   private SpeedController motorC;
 
   public DriveTrain(){
-    motorA = new Talon(RobotMap.MOTOR_A_ID);
-    motorB = new Talon(RobotMap.MOTOR_B_ID);
-    motorC = new Talon(RobotMap.MOTOR_C_ID);
+    motorA = new VictorSP(RobotMap.MOTOR_A_ID);
+    motorB = new VictorSP(RobotMap.MOTOR_B_ID);
+    motorC = new VictorSP(RobotMap.MOTOR_C_ID);
   }
 
 
   public void holonomicDrive(double xValue, double yValue) {
 
-    double maxSpeed = 1.0;
+    double robotMaxSpeed = 1.0;
 
     double x = xValue;
     double y = yValue;
-
-    
 
     double theta = Math.atan(y/x);
     double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     double speed = r;
     double convertedTheta = theta;
 
-    if (theta > (Math.PI / 2))
-      convertedTheta = theta - (Math.PI / 2);
-    else if (theta > Math.PI)
-      convertedTheta = theta - Math.PI;
-    else if (theta > (Math.PI * 3 / 2))
-      convertedTheta = theta - (Math.PI * 3 / 2);
+    if (theta > Math.toRadians(90))
+      convertedTheta = theta - Math.toRadians(90);
+    else if (theta > Math.toRadians(180))
+      convertedTheta = theta - Math.toRadians(180);
+    else if (theta > Math.toRadians(270))
+      convertedTheta = theta - Math.toRadians(270);
 
-    if (Math.abs(x) > Math.abs(y)) {
-      double maxPossibleSpeed = 1/(Math.cos(convertedTheta));
-      speed = r / maxPossibleSpeed;
-    }
-    else {
-      double maxPossibleSpeed = 1/(Math.cos((Math.PI / 2) - convertedTheta));
-      speed = r / maxPossibleSpeed;
-    }
+    double maxMagnitude;
+    if (Math.abs(x) > Math.abs(y))
+      maxMagnitude = 1/(Math.cos(convertedTheta));
+    else
+      double maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
+    speed = r / maxMagnitude * robotMaxSpeed;
 
-    double motorATheta = 90-theta;
-    double motorBTheta = 210-theta;
-    double motorCTheta = 330-theta;
+    double motorATheta = Math.toRadians(90) - theta;
+    double motorBTheta = Math.toRadians(210) - theta;
+    double motorCTheta = Math.toRadians(330) - theta;
 
     double aSpeed = speed*Math.sin(motorATheta); //< 1.0 ? speed*Math.sin(motorATheta) : 1.0;
     double bSpeed = speed*Math.sin(motorBTheta); //< 1.0 ? speed*Math.sin(motorBTheta) : 1.0;
@@ -79,8 +75,8 @@ public class DriveTrain extends Subsystem {
     double z = zValue;
 
     motorA.set(z);
-    motorB.set(z);    
-    motorC.set(z); 
+    motorB.set(z);
+    motorC.set(z);
 
   }
 
