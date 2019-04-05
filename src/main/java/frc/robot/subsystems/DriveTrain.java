@@ -39,17 +39,34 @@ public class DriveTrain extends Subsystem {
 
     
 
-    double theta = Math.toDegrees(Math.atan(y/x));
+    double theta = Math.atan(y/x);
     double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-    double speed = maxSpeed * r;
+    double speed = r;
+    double convertedTheta = theta;
+
+    if (theta > (Math.PI / 2))
+      convertedTheta = theta - (Math.PI / 2);
+    else if (theta > Math.PI)
+      convertedTheta = theta - Math.PI;
+    else if (theta > (Math.PI * 3 / 2))
+      convertedTheta = theta - (Math.PI * 3 / 2);
+
+    if (Math.abs(x) > Math.abs(y)) {
+      double maxPossibleSpeed = 1/(Math.cos(convertedTheta));
+      speed = r / maxPossibleSpeed;
+    }
+    else {
+      double maxPossibleSpeed = 1/(Math.cos((Math.PI / 2) - convertedTheta));
+      speed = r / maxPossibleSpeed;
+    }
 
     double motorATheta = 90-theta;
     double motorBTheta = 210-theta;
     double motorCTheta = 330-theta;
 
-    double aSpeed = speed*Math.sin(motorATheta) < 1.0 ? speed*Math.sin(motorATheta) : 1.0;
-    double bSpeed = speed*Math.sin(motorBTheta) < 1.0 ? speed*Math.sin(motorBTheta) : 1.0;
-    double cSpeed = speed*Math.sin(motorCTheta) < 1.0 ? speed*Math.sin(motorCTheta) : 1.0;
+    double aSpeed = speed*Math.sin(motorATheta); //< 1.0 ? speed*Math.sin(motorATheta) : 1.0;
+    double bSpeed = speed*Math.sin(motorBTheta); //< 1.0 ? speed*Math.sin(motorBTheta) : 1.0;
+    double cSpeed = speed*Math.sin(motorCTheta); //< 1.0 ? speed*Math.sin(motorCTheta) : 1.0;
 
     motorA.set(aSpeed);
     motorB.set(bSpeed);
