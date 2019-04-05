@@ -67,11 +67,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    dTrain.holonomicDrive(jStick.getY(), jStick.getX());
-
-    if(RobotMap.rotating){
+    if(RobotMap.rotating)
       dTrain.rotationDrive(jStick.getZ());
-    }
+    else
+      dTrain.holonomicDrive(jStick.getY(), jStick.getX());
       
   }
 
