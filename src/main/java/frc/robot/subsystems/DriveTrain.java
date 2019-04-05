@@ -47,12 +47,9 @@ public class DriveTrain extends Subsystem {
     double motorBTheta = 210-theta;
     double motorCTheta = 330-theta;
 
-
-
     double aSpeed = speed*Math.sin(motorATheta) < 1.0 ? speed*Math.sin(motorATheta) : 1.0;
     double bSpeed = speed*Math.sin(motorBTheta) < 1.0 ? speed*Math.sin(motorBTheta) : 1.0;
     double cSpeed = speed*Math.sin(motorCTheta) < 1.0 ? speed*Math.sin(motorCTheta) : 1.0;
-
 
     motorA.set(aSpeed);
     motorB.set(bSpeed);
