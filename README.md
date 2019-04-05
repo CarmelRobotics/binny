@@ -13,4 +13,4 @@ This code is for binny, the trash can robot. For the project we decided to go wi
 ```
 
 ### Explanation of Math for Drivetrain:
-OH NO OH NO
+Uh... it just works.
