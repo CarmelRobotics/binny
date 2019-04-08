@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.RobotMap;
@@ -22,6 +23,8 @@ public class DriveTrain extends Subsystem {
   private SpeedController motorA;
   private SpeedController motorB;
   private SpeedController motorC;
+  private double theta;
+  private double speed;
 
   public DriveTrain(){
     motorA = new VictorSP(RobotMap.MOTOR_A_ID);
@@ -35,11 +38,11 @@ public class DriveTrain extends Subsystem {
     double robotMaxSpeed = 1.0;
 
     double x = xValue;
-    double y = yValue;
+    double y = -yValue;
 
-    double theta = Math.atan(y/x);
+    theta = Math.atan(y/x);
     double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-    double speed = r;
+    speed = r;
     double convertedTheta = theta;
 
     if (theta > Math.toRadians(90))
@@ -53,7 +56,7 @@ public class DriveTrain extends Subsystem {
     if (Math.abs(x) > Math.abs(y))
       maxMagnitude = 1/(Math.cos(convertedTheta));
     else
-      double maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
+      maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
     speed = r / maxMagnitude * robotMaxSpeed;
 
     double motorATheta = Math.toRadians(90) - theta;
@@ -68,7 +71,7 @@ public class DriveTrain extends Subsystem {
     motorB.set(bSpeed);
     motorC.set(cSpeed);
     
-
+    System.out.println("D: " + Math.toDegrees(theta) + ", X: " + x + ", Y: " + y);
   }
 
   public void rotationDrive(double zValue) {
@@ -82,7 +85,5 @@ public class DriveTrain extends Subsystem {
 
   @Override
   public void initDefaultCommand() {}
-
-
 
 }
