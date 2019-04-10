@@ -26,9 +26,9 @@ public class Rotate extends Command {
   }
   @Override
   protected void end() {
-    RobotMap.rotating = false;
   }
   @Override
   protected void interrupted() {
+    RobotMap.rotating = false;
   }
 }

@@ -41,8 +41,15 @@ public class DriveTrain extends Subsystem {
     double y = -yValue;
 
     theta = Math.atan(x/(-y)) + Math.toRadians(90);
+
     if (y < 0)
       theta = theta + Math.toRadians(180); 
+    if (x < 0 && Math.toDegrees(theta) == 0)
+      theta = Math.toRadians(180);
+    if (x > 0 && Math.toDegrees(theta) == 180)
+      theta = Math.toRadians(0); 
+    
+    double degrees = Math.toDegrees(theta);
     double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     speed = r;
     double convertedTheta = theta;
@@ -66,6 +73,9 @@ public class DriveTrain extends Subsystem {
       maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
 
     speed = Math.abs(r / (maxMagnitude * robotMaxSpeed));
+
+    if (degrees == 0 || degrees == 90 || degrees == 180 || degrees == 270)
+      speed = r;
 
     if (speed > 1)
       speed = 1.0;
