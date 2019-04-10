@@ -20,9 +20,9 @@ import frc.robot.RobotMap;
  */
 public class DriveTrain extends Subsystem {
   
-  private SpeedController motorA;
-  private SpeedController motorB;
-  private SpeedController motorC;
+  private VictorSP motorA;
+  private VictorSP motorB;
+  private VictorSP motorC;
   private double theta;
   private double speed;
 
@@ -40,24 +40,39 @@ public class DriveTrain extends Subsystem {
     double x = xValue;
     double y = -yValue;
 
-    theta = Math.atan(y/x);
+    theta = Math.atan(x/(-y)) + Math.toRadians(90);
+    if (y < 0)
+      theta = theta + Math.toRadians(180); 
     double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     speed = r;
     double convertedTheta = theta;
 
     if (theta > Math.toRadians(90))
       convertedTheta = theta - Math.toRadians(90);
-    else if (theta > Math.toRadians(180))
+    else if (Math.toDegrees(theta) > 180)
       convertedTheta = theta - Math.toRadians(180);
-    else if (theta > Math.toRadians(270))
-      convertedTheta = theta - Math.toRadians(270);
+    else if (Math.toDegrees(theta) > 270)
+      convertedTheta = theta - Math.toRadians(360);
 
-    double maxMagnitude;
-    if (Math.abs(x) > Math.abs(y))
+    double maxMagnitude = 0;
+
+    if (y > 0 && x > 0 && Math.abs(y) > Math.abs(x))
+      maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
+    else if (y > 0 && x > 0 && Math.abs(y) < Math.abs(x))
+      maxMagnitude = 1/(Math.cos(convertedTheta));
+    else if (Math.abs(y) > Math.abs(x))
       maxMagnitude = 1/(Math.cos(convertedTheta));
     else
       maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
-    speed = r / maxMagnitude * robotMaxSpeed;
+
+    speed = Math.abs(r / (maxMagnitude * robotMaxSpeed));
+
+    if (speed > 1)
+      speed = 1.0;
+
+    System.out.println("Sp: " + speed + ", D: " + Math.toDegrees(theta));
+
+    speed = Math.abs(speed);
 
     double motorATheta = Math.toRadians(90) - theta;
     double motorBTheta = Math.toRadians(210) - theta;
@@ -71,7 +86,6 @@ public class DriveTrain extends Subsystem {
     motorB.set(bSpeed);
     motorC.set(cSpeed);
     
-    System.out.println("D: " + Math.toDegrees(theta) + ", X: " + x + ", Y: " + y);
   }
 
   public void rotationDrive(double zValue) {
