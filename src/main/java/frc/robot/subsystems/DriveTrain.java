@@ -21,6 +21,7 @@ import frc.robot.RobotMap;
 public class DriveTrain extends Subsystem {
   
   private VictorSP motorA;
+  
   private VictorSP motorB;
   private VictorSP motorC;
   private double theta;
@@ -61,7 +62,7 @@ public class DriveTrain extends Subsystem {
     else if (Math.toDegrees(theta) > 270)
       convertedTheta = theta - Math.toRadians(360);
 
-    double maxMagnitude = 0;
+    double maxMagnitude;
 
     if (y > 0 && x > 0 && Math.abs(y) > Math.abs(x))
       maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
@@ -81,7 +82,6 @@ public class DriveTrain extends Subsystem {
       speed = 1.0;
 
     System.out.println("Sp: " + speed + ", D: " + Math.toDegrees(theta));
-
     speed = Math.abs(speed);
 
     double motorATheta = Math.toRadians(90) - theta;
