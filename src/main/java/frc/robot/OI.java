@@ -21,7 +21,7 @@ public class OI {
   private static JoystickButton rotation;
   
   public static void initialize() {
-    jStick = RobotMap.JOYSTICK_A;
+    jStick = Robot.jStick;
     
     rotation = RobotMap.ROTATION_BUTTON;
 

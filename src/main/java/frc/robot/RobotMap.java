@@ -20,7 +20,7 @@ public class RobotMap {
 
   /* IDs */
   public static final int JOYSTICK_A_ID = 0;
-  public static final int ROTATION_BUTTON_ID = 1;
+  public static final int ROTATION_BUTTON_ID = 5;
 
   public static final int MOTOR_A_ID = 0;
   public static final int MOTOR_B_ID = 1;
@@ -32,5 +32,4 @@ public class RobotMap {
   public static final JoystickButton ROTATION_BUTTON = new JoystickButton(JOYSTICK_A, ROTATION_BUTTON_ID);
 
   /*Various other Variables*/
-  public static boolean rotating = false;
 }

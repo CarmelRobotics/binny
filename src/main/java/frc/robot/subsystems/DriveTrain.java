@@ -27,6 +27,9 @@ public class DriveTrain extends Subsystem {
   private double theta;
   private double speed;
 
+  private double robotMaxSpeed = 1.0;
+  private double robotMaxRotate = 0.5;
+
   public DriveTrain(){
     motorA = new VictorSP(RobotMap.MOTOR_A_ID);
     motorB = new VictorSP(RobotMap.MOTOR_B_ID);
@@ -35,8 +38,6 @@ public class DriveTrain extends Subsystem {
 
 
   public void holonomicDrive(double xValue, double yValue) {
-
-    double robotMaxSpeed = 1.0;
 
     double x = xValue;
     double y = -yValue;
@@ -81,7 +82,7 @@ public class DriveTrain extends Subsystem {
     if (speed > 1)
       speed = 1.0;
 
-    System.out.println("Sp: " + speed + ", D: " + Math.toDegrees(theta));
+    //System.out.println("Sp: " + speed + ", D: " + Math.toDegrees(theta));
     speed = Math.abs(speed);
 
     double motorATheta = Math.toRadians(90) - theta;
@@ -100,6 +101,8 @@ public class DriveTrain extends Subsystem {
 
   public void rotationDrive(double zValue) {
     double z = zValue;
+
+    z = z * robotMaxRotate;
 
     motorA.set(z);
     motorB.set(z);

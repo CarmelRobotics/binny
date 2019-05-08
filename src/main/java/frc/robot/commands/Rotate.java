@@ -8,27 +8,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.RobotMap;
+import frc.robot.Robot;
 
 public class Rotate extends Command {
+  
+  boolean r = Robot.rotating;
+
   public Rotate() {
+
   }
   @Override
   protected void initialize() {
+    System.out.println("button pressed");
   }
   @Override
   protected void execute() {
-    RobotMap.rotating = true;
+    if (r)
+      Robot.rotating = false;
+    else
+      Robot.rotating = true;
   }
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
   @Override
   protected void end() {
   }
+
   @Override
   protected void interrupted() {
-    RobotMap.rotating = false;
+    Robot.rotating = false;
   }
 }
