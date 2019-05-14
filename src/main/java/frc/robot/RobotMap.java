@@ -26,6 +26,7 @@ public class RobotMap {
   public static final int MOTOR_B_ID = 1;
   public static final int MOTOR_C_ID = 2;
 
+  /* Boolean that determines whether driving holo or rotation */ 
   public static boolean rotating = false;
 
   /* Joystick and Buttons */

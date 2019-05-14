@@ -15,7 +15,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
- * 3 Wheel Holonomic Drive
+ * @author Robert Paul, Aristotle Henderson
+ * @version 0.0
  */
 public class DriveTrain extends Subsystem {
   
@@ -35,25 +36,34 @@ public class DriveTrain extends Subsystem {
     motorC = new VictorSP(RobotMap.MOTOR_C_ID);
   }
 
+
+  /**
+   * Uses X and Y value to determine direction, advanced trigonometry.
+   * @param xValue
+   * @param yValue
+   */
   public void holonomicDrive(double xValue, double yValue) {
 
     double x = xValue;
     double y = -yValue;
 
-    theta = Math.atan(x/(-y)) + Math.toRadians(90);
+    theta = Math.atan(x/(-y)) + Math.toRadians(90); // Finds Angle of movement
 
-    if (y < 0)
+    // Below are some edge cases
+    if (y < 0) 
       theta = theta + Math.toRadians(180); 
     if (x < 0 && Math.toDegrees(theta) == 0)
       theta = Math.toRadians(180);
     if (x > 0 && Math.toDegrees(theta) == 180)
       theta = Math.toRadians(0); 
-    
-    double degrees = Math.toDegrees(theta);
-    double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-    speed = r;
-    double convertedTheta = theta;
+    // Above are some edge cases
 
+    double degrees = Math.toDegrees(theta); //Stores Angle as a Degree for ease of math
+    double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)); // Finds the magnitude of movement
+    speed = r; 
+    double convertedTheta = theta; 
+
+    // Edge Cases!
     if (theta > Math.toRadians(90))
       convertedTheta = theta - Math.toRadians(90);
     else if (Math.toDegrees(theta) > 180)
@@ -61,8 +71,10 @@ public class DriveTrain extends Subsystem {
     else if (Math.toDegrees(theta) > 270)
       convertedTheta = theta - Math.toRadians(360);
 
-    double maxMagnitude;
 
+    double maxMagnitude;
+    
+    // Determines the maximum magnitude so that we don't end up with numbers > 1
     if (y > 0 && x > 0 && Math.abs(y) > Math.abs(x))
       maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
     else if (y > 0 && x > 0 && Math.abs(y) < Math.abs(x))

@@ -17,11 +17,11 @@ public class RotateStart extends Command {
   }
   @Override
   protected void initialize() {
-    System.out.println("button pressed");
+    System.out.println("RotateStart");
   }
   @Override
   protected void execute() {
-    RobotMap.rotating = true;
+    RobotMap.rotating = true; // Setting to Rotation Drive
   }
   @Override
   protected boolean isFinished() {

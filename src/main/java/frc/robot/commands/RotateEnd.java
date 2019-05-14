@@ -17,11 +17,11 @@ public class RotateEnd extends Command {
   }
   @Override
   protected void initialize() {
-    System.out.println("button pressed");
+    System.out.println("RotateEnd");
   }
   @Override
   protected void execute() {
-    RobotMap.rotating = false;
+    RobotMap.rotating = false; // Setting back to Holonomic drive
   }
   @Override
   protected boolean isFinished() {
