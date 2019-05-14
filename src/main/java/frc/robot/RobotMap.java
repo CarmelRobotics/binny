@@ -26,6 +26,8 @@ public class RobotMap {
   public static final int MOTOR_B_ID = 1;
   public static final int MOTOR_C_ID = 2;
 
+  public static boolean rotating = false;
+
   /* Joystick and Buttons */
   public static final Joystick JOYSTICK_A = new Joystick(JOYSTICK_A_ID);
 

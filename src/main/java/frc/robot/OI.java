@@ -25,7 +25,8 @@ public class OI {
     
     rotation = RobotMap.ROTATION_BUTTON;
 
-    rotation.whileHeld(new Rotate());
+    rotation.whenPressed(new RotateStart());
+    rotation.whenReleased(new RotateEnd());
   }
   
 }

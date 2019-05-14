@@ -24,15 +24,15 @@ public class Robot extends TimedRobot {
   
   public static Joystick jStick;
 
-  public static boolean rotating;
-
   @Override
   public void robotInit() {
     oi = new OI();
     dTrain = new DriveTrain();
     jStick = RobotMap.JOYSTICK_A;
-    rotating = false;
+    
     SmartDashboard.putData("Auto mode", chooser);
+
+    OI.initialize();
   }
 
   
@@ -64,13 +64,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
   }
-
   
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    if(Math.abs(jStick.getZ()) > 0.4) {
+    if(RobotMap.rotating){//Math.abs(jStick.getZ()) > 0.4) {
       dTrain.rotationDrive(jStick.getZ());
       System.out.println("rotate");
     }
@@ -79,7 +78,6 @@ public class Robot extends TimedRobot {
       System.out.println("holonomic");
     }
   }
-
   
   @Override
   public void testPeriodic() {

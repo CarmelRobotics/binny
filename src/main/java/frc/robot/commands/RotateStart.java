@@ -8,13 +8,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class Rotate extends Command {
-  
-  boolean r = Robot.rotating;
+public class RotateStart extends Command {
 
-  public Rotate() {
+  public RotateStart() {
 
   }
   @Override
@@ -23,10 +21,7 @@ public class Rotate extends Command {
   }
   @Override
   protected void execute() {
-    if (r)
-      Robot.rotating = false;
-    else
-      Robot.rotating = true;
+    RobotMap.rotating = true;
   }
   @Override
   protected boolean isFinished() {
@@ -38,6 +33,5 @@ public class Rotate extends Command {
 
   @Override
   protected void interrupted() {
-    Robot.rotating = false;
   }
 }

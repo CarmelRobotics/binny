@@ -16,7 +16,6 @@ import frc.robot.RobotMap;
 
 /**
  * 3 Wheel Holonomic Drive
- * 
  */
 public class DriveTrain extends Subsystem {
   
@@ -35,7 +34,6 @@ public class DriveTrain extends Subsystem {
     motorB = new VictorSP(RobotMap.MOTOR_B_ID);
     motorC = new VictorSP(RobotMap.MOTOR_C_ID);
   }
-
 
   public void holonomicDrive(double xValue, double yValue) {
 
