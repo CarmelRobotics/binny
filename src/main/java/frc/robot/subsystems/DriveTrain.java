@@ -38,7 +38,7 @@ public class DriveTrain extends Subsystem {
 
 
   /**
-   * Uses X and Y value to determine direction, advanced trigonometry.
+   * 3 Wheeled DriveTrain
    * @param xValue
    * @param yValue
    */
@@ -112,6 +112,11 @@ public class DriveTrain extends Subsystem {
     
   }
 
+  /**
+   * Sets motors to the value of z so that the bot spins..
+   * 0
+   * @param zValue
+   */
   public void rotationDrive(double zValue) {
     double z = zValue;
  
