@@ -63,7 +63,7 @@ public class DriveTrain extends Subsystem {
     speed = r; 
     double convertedTheta = theta; 
 
-    // Edge Cases!
+    // Corrects theta for the quadrant (I, II, III, IV)
     if (theta > Math.toRadians(90))
       convertedTheta = theta - Math.toRadians(90);
     else if (Math.toDegrees(theta) > 180)
@@ -75,33 +75,36 @@ public class DriveTrain extends Subsystem {
     double maxMagnitude;
     
     // Determines the maximum magnitude so that we don't end up with numbers > 1
-    if (y > 0 && x > 0 && Math.abs(y) > Math.abs(x))
+    if (y > 0 && x > 0 && Math.abs(y) > Math.abs(x)) {
       maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
-    else if (y > 0 && x > 0 && Math.abs(y) < Math.abs(x))
+    }
+    else if (y > 0 && x > 0 && Math.abs(y) < Math.abs(x)) {
       maxMagnitude = 1/(Math.cos(convertedTheta));
-    else if (Math.abs(y) > Math.abs(x))
+    }
+    else if (Math.abs(y) > Math.abs(x)) {
       maxMagnitude = 1/(Math.cos(convertedTheta));
-    else
+    }
+    else {
       maxMagnitude = 1/(Math.cos((Math.PI / 2) - convertedTheta));
+    }
 
-    speed = Math.abs(r / (maxMagnitude * robotMaxSpeed));
+    speed = Math.abs(r / (maxMagnitude * robotMaxSpeed)); 
 
-    if (degrees == 0 || degrees == 90 || degrees == 180 || degrees == 270)
-      speed = r;
+    if (degrees == 0 || degrees == 90 || degrees == 180 || degrees == 270){
+      speed = r;}
+    
+    if (speed > 1){ // A failsafe, so that if the speed is greater than 1 it is just set to 1
+      speed = 1.0;}
 
-    if (speed > 1)
-      speed = 1.0;
-
-    //System.out.println("Sp: " + speed + ", D: " + Math.toDegrees(theta));
     speed = Math.abs(speed);
 
-    double motorATheta = Math.toRadians(90) - theta;
-    double motorBTheta = Math.toRadians(210) - theta;
+    double motorATheta = Math.toRadians(90) - theta; // Finds the angle for the motors
+    double motorBTheta = Math.toRadians(210) - theta; 
     double motorCTheta = Math.toRadians(330) - theta;
 
-    double aSpeed = speed*Math.sin(motorATheta); //< 1.0 ? speed*Math.sin(motorATheta) : 1.0;
-    double bSpeed = speed*Math.sin(motorBTheta); //< 1.0 ? speed*Math.sin(motorBTheta) : 1.0;
-    double cSpeed = speed*Math.sin(motorCTheta); //< 1.0 ? speed*Math.sin(motorCTheta) : 1.0;
+    double aSpeed = speed*Math.sin(motorATheta); // speed for motor A
+    double bSpeed = speed*Math.sin(motorBTheta); // " " motor B
+    double cSpeed = speed*Math.sin(motorCTheta); // " " motor C
 
     motorA.set(aSpeed);
     motorB.set(bSpeed);
@@ -111,7 +114,7 @@ public class DriveTrain extends Subsystem {
 
   public void rotationDrive(double zValue) {
     double z = zValue;
-
+ 
     z = z * robotMaxRotate;
 
     motorA.set(z);
